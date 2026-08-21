@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    border: 5px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "JetBrains Mono", sans-serif;
+    gap: 25px;
+}
+
+.grid-container {
+    display: grid;
+    background-color: #cbd5e1;
+    border: 3px solid #0f172a;
+    border-radius: 16px;
+    width: 300px;
+    height: 300px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px;
+    padding: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+.square {
+    font-family: 'Arial', sans-serif;
+    display: grid;
+    place-items: center;
+    background-color: #ffffff;
+    border: 2px solid #94a3b8;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.square:hover{
+    background-color: #dedee7;
+}
