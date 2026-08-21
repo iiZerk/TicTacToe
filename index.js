@@ -24,6 +24,7 @@ const createPlayer = (name, letter) => {
 const player1 = createPlayer("Player 1", "X");
 const player2 = createPlayer("Player 2", "O");
 
+let winner = false;
 
 function makeMove(num, letter) {
     Gameboard.board[num] = letter;
@@ -32,10 +33,10 @@ function makeMove(num, letter) {
     const isWinnerO = WinConditions.patterns.some(pattern => pattern.every(index => Gameboard.board[index] === "O"));
 
     if (isWinnerX) {
-        console.log("X WON");
+        winner = true;
     }
     if (isWinnerO) {
-        console.log("O WON");
+        winner = true;
     }
 
     showBoard();
@@ -67,6 +68,7 @@ for(let i = 0; i < 9; i++) {
 }
 
 let currentLetter = "X";
+
 let playerTurn = document.querySelector('.player-turn');
 
 playerTurn.textContent = `${player1.name}'s turn (${player1.letter})`;
@@ -74,11 +76,17 @@ playerTurn.textContent = `${player1.name}'s turn (${player1.letter})`;
 squares.forEach((square, index) => {
     square.addEventListener('click', function() {
         console.log(`square index: ${index}`);
-        if (square.textContent === "") {
+        if (square.textContent === "" && !winner) {
             square.textContent = currentLetter;
             makeMove(index, currentLetter);
-            currentLetter = currentLetter === "X" ? "O" : "X";
-            playerTurn.textContent = currentLetter === "X" ? `${player1.name}'s turn (${player1.letter})` : `${player2.name}'s turn (${player2.letter})`;
+
+            if(winner) {
+                squares.forEach(s => s.style.pointerEvents = 'none');
+                playerTurn.textContent = "WINNER!";
+            } else {
+                currentLetter = currentLetter === "X" ? "O" : "X";
+                playerTurn.textContent = currentLetter === "X" ? `${player1.name}'s turn (${player1.letter})` : `${player2.name}'s turn (${player2.letter})`;
+            }
         }
     })
 })
