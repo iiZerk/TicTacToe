@@ -1,12 +1,77 @@
-const Gameboard = {
-    board: [
-        "", "", "",
-        "", "", "",
-        "", "", ""
-        ]
-};
+const Gameboard = (function() {
+    const board = ["", "", "", "", "", "", "", "", ""]
 
-const WinConditions = {
+    return {
+        getCell(index) {
+            return board[index];
+        },
+        markCell(index, letter) {
+            if(board[index] !== "") throw new Error("Cell is occupied.");
+
+            return board[index] = letter;
+        },
+        getBoard() {
+            return [...board];
+        },
+        reset() {
+            return board.fill("");
+        }
+    };
+})();
+
+const GameController = (function() {
+    const playerOne = {
+        name: "Player 1",
+        marker: "X"
+    };
+
+    const playerTwo = {
+        name: "Player 2",
+        marker: "O"
+    };
+
+    let activePlayer = playerOne;
+
+    const switchTurn = () => {
+        activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
+    }
+
+    const playRound = (index) => {
+        Gameboard.markCell(index, activePlayer.marker);
+        switchTurn();
+    }
+
+    return { playRound };
+})();
+
+const DisplayController = (function() {
+    const gridContainer = document.querySelector('.grid-container');
+
+    const render = () => {
+        gridContainer.innerHTML = "";
+
+        const board = Gameboard.getBoard();
+
+        board.forEach((element, index) => {
+            const square = document.createElement('div');
+            square.classList.add('square');
+            square.textContent = element;
+            gridContainer.appendChild(square);
+
+            square.addEventListener('click', () => {
+                GameController.playRound(index);
+                DisplayController.render();
+            })
+        });
+    };
+
+    return { render };
+})();
+
+DisplayController.render();
+
+
+/*const WinConditions = {
     patterns: [
         // Horizontal
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -15,78 +80,4 @@ const WinConditions = {
         //Diagonal
         [0, 4, 8], [2, 4, 6]
     ]
-}
-
-const createPlayer = (name, letter) => {
-    return { name, letter };
-};
-
-const player1 = createPlayer("Player 1", "X");
-const player2 = createPlayer("Player 2", "O");
-
-let winner = false;
-
-function makeMove(num, letter) {
-    Gameboard.board[num] = letter;
-
-    const isWinnerX = WinConditions.patterns.some(pattern => pattern.every(index => Gameboard.board[index] === "X"));
-    const isWinnerO = WinConditions.patterns.some(pattern => pattern.every(index => Gameboard.board[index] === "O"));
-
-    if (isWinnerX) {
-        winner = true;
-    }
-    if (isWinnerO) {
-        winner = true;
-    }
-
-    showBoard();
-}
-
-function showBoard() {
-    const b = Gameboard.board.map(cell => cell || " ");
-
-    console.log(` ${b[0]} | ${b[1]} | ${b[2]} `);
-    console.log(`-----------`);
-    console.log(` ${b[3]} | ${b[4]} | ${b[5]} `);
-    console.log(`-----------`);
-    console.log(` ${b[6]} | ${b[7]} | ${b[8]} `);
-
-}
-
-showBoard();
-
-const gridContainer = document.querySelector('.grid-container');
-
-const squares = [];
-
-for(let i = 0; i < 9; i++) {
-    const square = document.createElement('div');
-    square.classList.add('square');
-    squares.push(square);
-
-    gridContainer.appendChild(square);
-}
-
-let currentLetter = "X";
-
-let playerTurn = document.querySelector('.player-turn');
-
-playerTurn.textContent = `${player1.name}'s turn (${player1.letter})`;
-
-squares.forEach((square, index) => {
-    square.addEventListener('click', function() {
-        console.log(`square index: ${index}`);
-        if (square.textContent === "" && !winner) {
-            square.textContent = currentLetter;
-            makeMove(index, currentLetter);
-
-            if(winner) {
-                squares.forEach(s => s.style.pointerEvents = 'none');
-                playerTurn.textContent = "WINNER!";
-            } else {
-                currentLetter = currentLetter === "X" ? "O" : "X";
-                playerTurn.textContent = currentLetter === "X" ? `${player1.name}'s turn (${player1.letter})` : `${player2.name}'s turn (${player2.letter})`;
-            }
-        }
-    })
-})
+}*/
