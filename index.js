@@ -66,7 +66,14 @@ const GameController = (function() {
         return WINNING_COMBINATIONS.some(combination => combination.every(index => Gameboard.getCell(index) === activePlayer.marker));
     }
 
-    return { playRound, checkWin };
+    const restartGame = () => {
+        isGameOver = false;
+        activePlayer = playerOne;
+        Gameboard.reset();
+        DisplayController.render();
+    }
+
+    return { playRound, checkWin, restartGame };
 })();
 
 const DisplayController = (function() {
@@ -95,21 +102,3 @@ const DisplayController = (function() {
 })();
 
 DisplayController.render();
-
-
-/*const WinConditions = {
-    patterns: [
-        // Horizontal
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        // Vertical
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        //Diagonal
-        [0, 4, 8], [2, 4, 6]
-    ]
-}*/
-
-const nums = [ 1, 8, 5, 7, 3, 8, 12, 15, 19, 20];
-
-const evenNums = nums.every((element) => element % 2 === 0);
-
-console.log(evenNums);
