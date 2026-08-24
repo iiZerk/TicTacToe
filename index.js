@@ -6,7 +6,7 @@ const Gameboard = (function() {
             return board[index];
         },
         markCell(index, letter) {
-            if(board[index] !== "") throw new Error("Cell is occupied.");
+            if(board[index] !== "") return;
 
             return board[index] = letter;
         },
@@ -45,11 +45,20 @@ const GameController = (function() {
     }
 
     const playRound = (index) => {
+        if(Gameboard.getCell(index) !== "") return;
         Gameboard.markCell(index, activePlayer.marker);
+        if(checkWin()) {
+            console.log("WINNUR");
+            return;
+        }
         switchTurn();
     }
 
-    return { playRound };
+    const checkWin = () => {
+        return WINNING_COMBINATIONS.some(combination => combination.every(index => Gameboard.getCell(index) === activePlayer.marker));
+    }
+
+    return { playRound, checkWin };
 })();
 
 const DisplayController = (function() {
@@ -64,6 +73,7 @@ const DisplayController = (function() {
             const square = document.createElement('div');
             square.classList.add('square');
             square.textContent = element;
+            square.style.fontSize = "1.2em";
             gridContainer.appendChild(square);
 
             square.addEventListener('click', () => {
@@ -89,3 +99,9 @@ DisplayController.render();
         [0, 4, 8], [2, 4, 6]
     ]
 }*/
+
+const nums = [ 1, 8, 5, 7, 3, 8, 12, 15, 19, 20];
+
+const evenNums = nums.every((element) => element % 2 === 0);
+
+console.log(evenNums);
