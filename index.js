@@ -20,6 +20,8 @@ const Gameboard = (function() {
 })();
 
 const GameController = (function() {
+    let isGameOver = false;
+
     const WINNING_COMBINATIONS = [
         // Horizontal
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -45,10 +47,16 @@ const GameController = (function() {
     }
 
     const playRound = (index) => {
+        if (isGameOver) return;
         if(Gameboard.getCell(index) !== "") return;
         Gameboard.markCell(index, activePlayer.marker);
         if(checkWin()) {
-            console.log("WINNUR");
+            isGameOver = true;
+            console.log(`Game over! ${activePlayer.name} (${activePlayer.marker}) wins!`);
+            return;
+        } else if (Gameboard.getBoard().every(cell => cell !== "")){
+            isGameOver = true;
+            console.log("DRAW!");
             return;
         }
         switchTurn();
