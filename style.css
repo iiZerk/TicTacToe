@@ -68,6 +68,7 @@ body {
 }
 
 .restart-btn {
+    font-family: "JetBrains Mono", sans-serif;
     padding: 12px 24px;
     background-color: white;
     outline: none;
