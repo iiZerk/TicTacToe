@@ -7,9 +7,25 @@
     <title>Title</title>
 </head>
 <body>
+<dialog class="menu-dialog">
+    <form class="player-form" id="player-form">
+        <p>Player Setup</p>
+        <div class="field-group">
+            <label for="player-one-name">Player One</label>
+            <input name="player-one-name" type="text" id="player-one-name" maxlength="20" placeholder="Enter name">
+            <p class="max-chars">Max 20 characters</p>
+        </div>
+        <div class="field-group">
+            <label for="player-two-name">Player Two</label>
+            <input name="player-two-name" type="text" id="player-two-name" maxlength="20" placeholder="Enter name">
+            <p class="max-chars">Max 20 characters</p>
+        </div>
+        <button type="submit" class="start-game-btn">START GAME</button>
+    </form>
+</dialog>
 <div class="container">
     <div class="title-container">
-        <p class="title">Player 1's turn! (X)</p>
+        <p class="title">Welcome to Tic-Tac-Toe!</p>
     </div>
     <div class="grid-container"></div>
     <div class="button-container">

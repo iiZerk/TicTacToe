@@ -17,6 +17,60 @@ body {
     gap: 25px;
 }
 
+.form-container {
+    border: 2px solid;
+    width: 100%;
+}
+
+.menu-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 300px;
+    align-self: center;
+    justify-self: center;
+    padding: 20px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group input {
+    max-width: stretch;
+    outline: none;
+    border: 2px solid #cecece;
+    border-radius: 2px;
+    height: 30px;
+    padding-left: 8px;
+    font-family: inherit;
+}
+
+.field-group label {
+    width: fit-content;
+}
+
+.start-game-btn {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.max-chars {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.player-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-form > p {
+    align-self: center;
+    margin-bottom: 35px;
+}
+
 .container {
     display: flex;
     flex-direction: column;

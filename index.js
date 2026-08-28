@@ -1,3 +1,8 @@
+const menu = document.querySelector('.menu-dialog')
+const playerForm = document.getElementById('player-form');
+
+menu.showModal();
+
 const Gameboard = (function() {
     const board = ["", "", "", "", "", "", "", "", ""]
 
@@ -80,6 +85,18 @@ const GameController = (function() {
 
     restartGameBtn.addEventListener('click', restartGame);
 
+    playerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        menu.close();
+        const formData = new FormData(playerForm);
+        const player1Name = formData.get('player-one-name').trim() || 'Player One';
+        const player2Name = formData.get('player-two-name').trim() || 'Player Two';
+
+        playerOne.name = player1Name;
+        playerTwo.name = player2Name;
+
+        titleText.textContent = `${activePlayer.name}'s turn! (${activePlayer.marker})`;
+    })
     return { playRound, checkWin, restartGame };
 })();
 
