@@ -17,6 +17,21 @@ body {
     gap: 25px;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+}
+
 .grid-container {
     display: grid;
     background-color: #cbd5e1;
@@ -44,4 +59,27 @@ body {
 
 .square:hover{
     background-color: #dedee7;
+}
+
+.button-container {
+    display: grid;
+    place-items: center;
+    width: 300px;
+}
+
+.restart-btn {
+    padding: 12px 24px;
+    background-color: white;
+    outline: none;
+    border: 2px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.restart-btn:hover {
+    background-color: #eeeeee;
+}
+
+.restart-btn:active {
+    background-color: #d9d9d9;
 }

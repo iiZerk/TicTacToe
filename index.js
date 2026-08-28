@@ -20,6 +20,8 @@ const Gameboard = (function() {
 })();
 
 const GameController = (function() {
+    let restartGameBtn = document.querySelector(".restart-btn");
+    let titleText = document.querySelector(".title");
     let isGameOver = false;
 
     const WINNING_COMBINATIONS = [
@@ -44,6 +46,7 @@ const GameController = (function() {
 
     const switchTurn = () => {
         activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
+        titleText.textContent = `${activePlayer.name}'s turn! (${activePlayer.marker})`;
     }
 
     const playRound = (index) => {
@@ -52,11 +55,12 @@ const GameController = (function() {
         Gameboard.markCell(index, activePlayer.marker);
         if(checkWin()) {
             isGameOver = true;
+            titleText.textContent = `Game over! ${activePlayer.name} (${activePlayer.marker}) wins!`;
             console.log(`Game over! ${activePlayer.name} (${activePlayer.marker}) wins!`);
             return;
         } else if (Gameboard.getBoard().every(cell => cell !== "")){
             isGameOver = true;
-            console.log("DRAW!");
+            titleText.textContent = "It's a Draw!";
             return;
         }
         switchTurn();
@@ -71,7 +75,10 @@ const GameController = (function() {
         activePlayer = playerOne;
         Gameboard.reset();
         DisplayController.render();
+        titleText.textContent = `${activePlayer.name}'s turn! (${activePlayer.marker})`;
     }
+
+    restartGameBtn.addEventListener('click', restartGame);
 
     return { playRound, checkWin, restartGame };
 })();
@@ -88,6 +95,7 @@ const DisplayController = (function() {
             const square = document.createElement('div');
             square.classList.add('square');
             square.textContent = element;
+            square.style.userSelect = 'none';
             square.style.fontSize = "1.2em";
             gridContainer.appendChild(square);
 
